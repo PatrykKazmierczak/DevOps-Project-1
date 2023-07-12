@@ -1,0 +1,22 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "https://user-images.githubusercontent.com/46955522/165079724-bb213c3a-6be7-45d9-a144-d601bd4bc4cf.mp4",
+  "main": "todo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PatrykKazmierczak/Todo-App.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PatrykKazmierczak/Todo-App/issues"
+  },
+  "homepage": "https://github.com/PatrykKazmierczak/Todo-App#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
