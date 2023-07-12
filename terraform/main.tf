@@ -14,6 +14,8 @@ provider "aws" {
   region = var.region
 }
 
+
+
 module "EC2" {
     source = "./EC2"
 }
