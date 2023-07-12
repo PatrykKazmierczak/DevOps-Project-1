@@ -38,6 +38,6 @@ jobs:
           -out=PLAN
         working-directory: ./terraform  
       - name: Terraform Apply
-        id: applu
+        id: apply
         run: terraform apply PLAN
         working-directory: ./terraform
