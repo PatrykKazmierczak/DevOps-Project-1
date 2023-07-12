@@ -43,7 +43,7 @@ jobs:
         working-directory: ./terraform
 
 
-jobs:
+# jobs:
 #   deploy-infra:
 #     runs-on: ubuntu-latest
 #     steps:
