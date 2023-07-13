@@ -10,7 +10,7 @@ env:
   TF_STATE_BUCKET_NAME: ${{ secrets.AWS_TF_STATE_BUCKET_NAME }}
   PRIVATE_SSH_KEY: ${{ secrets.AWS_SSH_KEY_PRIVATE }}
   PUBLIC_SSH_KEY: ${{ secrets.AWS_SSH_KEY_PUBLIC }}
-  AWS_REGION: us-east-1
+  AWS_REGION: eu-central-1
 
 jobs:
   deploy-infra:
@@ -26,13 +26,13 @@ jobs:
           terraform_wrapper: false
       - name: Terraform init
         id: init
-        run: terraform init -backend-config="bucket=$TF_STATE_BUCKET_NAME" -backend-config="region=us-east-1"
+        run: terraform init -backend-config="bucket=$TF_STATE_BUCKET_NAME" -backend-config="region=eu-central-1"
         working-directory: ./terraform
       - name: Terraform Plan
         id: plan
         run: |-
           terraform plan -destroy \
-          -var="region=us-east-1" \
+          -var="region=eu-central-1" \
           -var="public_key=$PUBLIC_SSH_KEY" \
           -var="private_key=$PRIVATE_SSH_KEY" \
           -var="key_name=deployer-key" \
@@ -72,7 +72,7 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: example-node-app
           IMAGE_TAG: ${{ github.sha }}
-          AWS_DEFAULT_REGION: us-east-1
+          AWS_DEFAULT_REGION: eu-central-1
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.SERVER_PUBLIC_IP }}
@@ -83,7 +83,7 @@ jobs:
             sudo apt update
             sudo apt install docker.io -y
             sudo apt install awscli -y
-            sudo $(aws ecr get-login --no-include-email --region us-east-1);
+            sudo $(aws ecr get-login --no-include-email --region eu-central-1);
             sudo docker stop myappcontainer || true
             sudo docker rm myappcontainer || true
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
