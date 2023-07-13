@@ -1,50 +1,90 @@
 name: CI/CD with Terraform
-
 on:
   push:
-    branches: 
-      - Complete-CI/CD-with-Terraform-and-AWS
+    branches:
+      - Complete-CI/CD-with-Terraform-AWS
 
 env:
-  # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  # AWS_SSH_KEY_PRIVATE: ${{ secrets.AWS_SSH_KEY_PRIVATE }}
-  # AWS_SSH_KEY_PUBLIC: ${{ secrets.AWS_SSH_KEY_PUBLIC }}
-  # AWS_TF_STATE_BUCKET_NAME: ${{ secrets.AWS_TF_STATE_BUCKET_NAME }}
-  AWS_ACCESS_KEY_ID: AKIASVAPQFHKUFDLCMJL
-  AWS_SECRET_ACCESS_KEY: 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
-  AWS_SSH_KEY_PRIVATE: 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
-  AWS_SSH_KEY_PUBLIC: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCydfyULd1mZp9/sLvh9CXao5RmlOTEWJsXzQ9mDu8E92jhabo109sDLLanoxHm91nHOQ2Motauyr0/TgD0IX2iloK21WQbqORDJUZc4IcMrf3i+v0sJ+1KzUDcdi6kxFOju8CgeTeX+JpMy5pGHUsMfL9v/t7es2nipixb0DJCG8GeZnhdWy60xo39Nqmng4eIerLAm192Be5sS8nCbFhxVplEnLa5vXjjXuIYL4Xp08/v0bIM7d9CQuPqkDx+KSSewJiKckLckTHVVyXAx5zx60sKRHntXSbJ9UZ+pAtNscRjPKDtO7b50R6xToLZfKa/7Vhwr33nwun+++hCHP5uIaPmaCXIoc4vQ/0PF1P3upBsXNO82r6v6i7FE+9UJ72Y/ikYPQChX1s073fouavBYtABqU5EKbZxItluyYwjswaNx9czCiRIOYXr3TRZO4P3fY8UdjTrnQClaTGzSc4yBGSLRqcUChmtEkmAZrnwPt6W7gd+sEX/0eFld6DvojM= patro@Comp
-  AWS_TF_STATE_BUCKET_NAME: terraform-docker-gitaction-nodeapp-bucket
-  AWS_REGION: eu-central-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  TF_STATE_BUCKET_NAME: ${{ secrets.AWS_TF_STATE_BUCKET_NAME }}
+  PRIVATE_SSH_KEY: ${{ secrets.AWS_SSH_KEY_PRIVATE }}
+  PUBLIC_SSH_KEY: ${{ secrets.AWS_SSH_KEY_PUBLIC }}
+  AWS_REGION: us-east-1
 
 jobs:
   deploy-infra:
     runs-on: ubuntu-latest
+    outputs:
+      SERVER_PUBLIC_IP: ${{ steps.set-ip.outputs.instance_public_ip}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup Terraform
+      - name: setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_wrapper: false
-      - name: Terraform init 
+      - name: Terraform init
         id: init
-        run: terraform init -backend-config="bucket=${{ env.AWS_TF_STATE_BUCKET_NAME }}" -backend-config="region=${{ env.AWS_REGION }}"
+        run: terraform init -backend-config="bucket=$TF_STATE_BUCKET_NAME" -backend-config="region=us-east-1"
         working-directory: ./terraform
       - name: Terraform Plan
         id: plan
-        run: |
-          terraform plan \
-          -var="region=${{ env.AWS_REGION }}" \
-          -var="public_keys=${{ env.AWS_SSH_KEY_PUBLIC }}" \
-          -var="private_keys=${{ env.AWS_SSH_KEY_PRIVATE }}" \
+        run: |-
+          terraform plan -destroy \
+          -var="region=us-east-1" \
+          -var="public_key=$PUBLIC_SSH_KEY" \
+          -var="private_key=$PRIVATE_SSH_KEY" \
           -var="key_name=deployer-key" \
           -out=PLAN
-        working-directory: ./terraform  
+        working-directory: ./terraform
       - name: Terraform Apply
         id: apply
         run: terraform apply PLAN
         working-directory: ./terraform
-
-        
+      - name: Set output
+        id: set-ip
+        run: |-
+          echo "::set-output name=instance_public_ip::$(terraform output instance_public_ip)"
+        working-directory: ./terraform
+  deploy-app:
+    runs-on: ubuntu-latest
+    needs: deploy-infra
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set IP env variable
+        run: echo SERVER_PUBLIC_IP=${{ needs.deploy-infra.outputs.SERVER_PUBLIC_IP }} >> $GITHUB_ENV
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, push docker image
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: example-node-app
+          IMAGE_TAG: ${{ github.sha }}
+        run: |-
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+        working-directory: ./nodeapp
+      - name: Deploy docker image to EC2
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: example-node-app
+          IMAGE_TAG: ${{ github.sha }}
+          AWS_DEFAULT_REGION: us-east-1
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SERVER_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ env.PRIVATE_SSH_KEY }}
+          envs: PRIVATE_SSH_KEY,REGISTRY,REPOSITORY,IMAGE_TAG,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_DEFAULT_REGION,AWS_REGION
+          script: |-
+            sudo apt update
+            sudo apt install docker.io -y
+            sudo apt install awscli -y
+            sudo $(aws ecr get-login --no-include-email --region us-east-1);
+            sudo docker stop myappcontainer || true
+            sudo docker rm myappcontainer || true
+            sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            sudo docker run -d --name myappcontainer -p 80:8080 $REGISTRY/$REPOSITORY:$IMAGE_TAG
