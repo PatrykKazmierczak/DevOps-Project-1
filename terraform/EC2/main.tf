@@ -11,7 +11,7 @@ resource "aws_instance" "server" {
         host = self.public_ip
         user = "ubuntu"
         private_key = var.private_key
-        timeout = "4n"
+        timeout = "4"
 
     }
     tags = {
