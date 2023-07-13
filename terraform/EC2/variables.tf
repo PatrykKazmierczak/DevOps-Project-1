@@ -2,4 +2,6 @@ variable "public_key" {}
 
 variable "private_key" {}
 
-variable "key_name" {}
+variable "key_name" {
+    default = "terraform"
+}
