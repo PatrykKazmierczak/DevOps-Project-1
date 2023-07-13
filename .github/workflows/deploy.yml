@@ -1,4 +1,4 @@
-name: CI/CD with Terraform
+name: CI/CD with Terraform new
 on:
   push:
     branches:
