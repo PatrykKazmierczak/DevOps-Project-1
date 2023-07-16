@@ -113,3 +113,4 @@ jobs:
           # Add your Selenium test commands here
           echo "Running Selenium tests..."
         working-directory: ./tests
+        
