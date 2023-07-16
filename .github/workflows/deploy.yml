@@ -13,11 +13,14 @@ env:
   PUBLIC_SSH_KEY: ${{ secrets.AWS_SSH_KEY_PUBLIC }}
   AWS_REGION: eu-central-1
 
+
 jobs:
   deploy-infra:
     runs-on: ubuntu-latest
     outputs:
       SERVER_PUBLIC_IP: ${{ steps.set-ip.outputs.instance_public_ip}}
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
     steps:
       - name: Checkout
         uses: actions/checkout@v2
