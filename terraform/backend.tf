@@ -1,10 +1,10 @@
-terraform {
-  cloud {
-    organization = "pkaz-devops"
+# terraform {
+#   cloud {
+#     organization = "pkaz-devops"
 
-    workspaces {
-      name = "devops-project-1"
-    }
-  }
-}
+#     workspaces {
+#       name = "devops-project-1"
+#     }
+#   }
+# }
 
