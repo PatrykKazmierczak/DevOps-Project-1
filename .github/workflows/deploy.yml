@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -13,6 +13,7 @@ env:
   PUBLIC_SSH_KEY: ${{ secrets.AWS_SSH_KEY_PUBLIC }}
   AWS_REGION: eu-central-1
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------------  
 
 jobs:
   deploy-infra:
@@ -28,10 +29,12 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_wrapper: false
+#------------------------------------------------------------------------------------------------------------------------------------------------------------          
       - name: Terraform init
         id: init
         run: terraform init -backend-config="bucket=$TF_STATE_BUCKET_NAME" -backend-config="key=terraform.tfstate" -backend-config="region=$AWS_REGION"
         working-directory: ./terraform
+#------------------------------------------------------------------------------------------------------------------------------------------------------------        
       - name: Terraform Plan
         id: plan
         run: |
@@ -42,6 +45,7 @@ jobs:
           -var="key_name=deployer-key" \
           -out=PLAN
         working-directory: ./terraform
+#------------------------------------------------------------------------------------------------------------------------------------------------------------        
       - name: Terraform Apply
         id: apply
         run: terraform apply PLAN
@@ -51,6 +55,7 @@ jobs:
         run: |
           echo "::set-output name=instance_public_ip::$(terraform output instance_public_ip)"
         working-directory: ./terraform
+#------------------------------------------------------------------------------------------------------------------------------------------------------------        
   
   deploy-app:
     runs-on: ubuntu-latest
@@ -63,6 +68,7 @@ jobs:
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+#------------------------------------------------------------------------------------------------------------------------------------------------------------        
       - name: Build, push docker image
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -73,6 +79,7 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
         working-directory: ./nodeapp
+#------------------------------------------------------------------------------------------------------------------------------------------------------------        
       - name: Deploy docker image to EC2
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
