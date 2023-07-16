@@ -74,7 +74,7 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: example-node-app
           IMAGE_TAG: ${{ github.sha }}
-        run: |-
+        run: |
           aws ecr get-login-password
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
@@ -113,4 +113,3 @@ jobs:
           # Add your Selenium test commands here
           echo "Running Selenium tests..."
         working-directory: ./tests
-        
