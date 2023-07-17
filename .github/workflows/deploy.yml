@@ -97,7 +97,7 @@ jobs:
             sudo docker stop myappcontainer || true
             sudo docker rm myappcontainer || true
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
-            sudo docker-compose -f ./nodeapp/docker-compose.yml up -d
+            sudo docker-compose up -d ./nodeapp/docker-compose.yml up -d
 #------------------------------------------------------------------------------------------------------------------------------------------------------------ 
   deploy-monitoring:
     runs-on: ubuntu-latest
