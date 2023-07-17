@@ -68,6 +68,7 @@ jobs:
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+#------------------------------------------------------------------------------------------------------------------------------------------------------------        
       - name: Build, push docker image
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -77,6 +78,7 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
         working-directory: ./nodeapp
+#------------------------------------------------------------------------------------------------------------------------------------------------------------        
       - name: Deploy docker image to EC2
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -97,19 +99,20 @@ jobs:
             sudo docker stop myappcontainer || true
             sudo docker rm myappcontainer || true
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
-            sudo docker-compose up -d ./nodeapp/docker-compose.yml up -d
-#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+            sudo docker run -d --name myappcontainer -p 80:8080 $REGISTRY/$REPOSITORY:$IMAGE_TAG
+#------------------------------------------------------------------------------------------------------------------------------------------------------------  
   deploy-monitoring:
     runs-on: ubuntu-latest
-    needs: deploy-infra
+    needs: deploy-app
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-  
-      - name: Run Docker Compose
-        run: |
-          cd nodeapp
-          sudo docker-compose up -d
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Run Docker Compose
+      run: |
+        cd nodeapp
+        sudo docker-compose up -d
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------------  
 
 # selenium-test:
