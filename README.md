@@ -13,3 +13,6 @@ To support the pipeline's operations, various environment variables are defined,
 By incorporating this CI/CD pipeline into your development workflow, you can benefit from automated infrastructure provisioning, streamlined application deployment, and improved overall efficiency. This pipeline reduces the need for manual intervention, enhances consistency, and enables rapid iteration of both infrastructure and application changes.
 
 Please refer to the documentation and instructions provided in the repository to effectively utilize and customize this CI/CD pipeline for your specific projects and requirements.
+
+![image](https://github.com/PatrykKazmierczak/DevOps-Project-1/assets/46955522/3f3d969d-ac81-477c-96de-c8386322f4af)
+
