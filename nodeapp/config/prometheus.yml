@@ -1,0 +1,28 @@
+# scrape_configs:
+#   - job_name: 'Spring Boot Application input'
+#     metrics_path: '/actuator/prometheus'
+#     scrape_interval: 3s
+#     static_configs:
+#       - targets: ['host.docker.internal:8080']
+#         labels:
+#           application: 'My Spring Boot Application'
+#     basic_auth:
+#       username: user
+#       password: password
+
+scrape_configs: 
+# The job name is added as a label `job=<job_name>` to any timeseries scraped from this config. 
+- job_name: 'prometheus' 
+  metrics_path: '/metrics'
+  # Careful, the scrape timeout has to be lower than the scrape interval. 
+  scrape_interval: 6s 
+  scrape_timeout: 5s 
+  static_configs: 
+  - targets: ['192.168.100.92:9182']
+- job_name: 'app-springboot-postgresql' 
+  metrics_path: '/web/login/login-page'
+  # Careful, the scrape timeout has to be lower than the scrape interval. 
+  scrape_interval: 6s 
+  scrape_timeout: 5s 
+  static_configs: 
+  - targets: ['192.168.100.92:8086']  
