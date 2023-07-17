@@ -117,8 +117,8 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           cd nodeapp
-          docker-compose build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker-compose push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          sudo docker-compose up -d $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          sudo docker-compose push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 #------------------------------------------------------------------------------------------------------------------------------------------------------------           
       - name: Deploy Docker image to EC2
         env:
