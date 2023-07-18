@@ -86,10 +86,10 @@ jobs:
       - name: Deploy Prometheus
         run: |
           aws ecr create-repository --repository-name prometheus
-          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID_ECR }}.dkr.ecr.eu-central-1.amazonaws.com
           docker pull prom/prometheus:latest
-          docker tag prom/prometheus:latest <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/prometheus:latest
-          docker push <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/prometheus:latest
+          docker tag prom/prometheus:latest ${{ secrets.AWS_ACCOUNT_ID_ECR }}.dkr.ecr.eu-central-1.amazonaws.com/prometheus:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID_ECR }}.dkr.ecr.eu-central-1.amazonaws.com/prometheus:latest
           # Deploy Prometheus using your desired method (e.g., ECS, Docker Compose, etc.)
           # Example: SSH into EC2 instance and run Docker commands to start Prometheus container
           ssh ubuntu@${{ needs.deploy-infra.outputs.SERVER_PUBLIC_IP }} -i ${{ secrets.AWS_SSH_KEY_PRIVATE }} "docker run -d --name prometheus-container -v /path/to/prometheus/config:/etc/prometheus -p 9090:9090 <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/prometheus:latest"
@@ -107,10 +107,10 @@ jobs:
       - name: Deploy Grafana
         run: |
           aws ecr create-repository --repository-name grafana
-          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID_ECR }}.dkr.ecr.eu-central-1.amazonaws.com
           docker pull grafana/grafana-oss:9.1.4
-          docker tag grafana/grafana-oss:9.1.4 <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4
-          docker push <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4
+          docker tag grafana/grafana-oss:9.1.4 ${{ secrets.AWS_ACCOUNT_ID_ECR }}.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4
+          docker push ${{ secrets.AWS_ACCOUNT_ID_ECR }}.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4
           # Deploy Grafana using your desired method (e.g., ECS, Docker Compose, etc.)
           # Example: SSH into EC2 instance and run Docker commands to start Grafana container
           ssh ubuntu@${{ needs.deploy-infra.outputs.SERVER_PUBLIC_IP }} -i ${{ secrets.AWS_SSH_KEY_PRIVATE }} "docker run -d --name grafana-container -p 3001:3000 -v /path/to/grafana/data:/var/lib/grafana -e GF_SECURITY_ADMIN_PASSWORD=admin -e GF_SERVER_DOMAIN=localhost <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4"
