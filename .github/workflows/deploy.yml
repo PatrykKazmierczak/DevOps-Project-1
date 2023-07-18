@@ -134,7 +134,7 @@ jobs:
           docker push ${{ secrets.AWS_ACCOUNT_ID_ECR }}.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4
           # Deploy Grafana using your desired method (e.g., ECS, Docker Compose, etc.)
 
-\       
+  
 
             
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
