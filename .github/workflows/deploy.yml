@@ -97,6 +97,10 @@ jobs:
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             sudo docker run -d --name myappcontainer -p 80:8080 $REGISTRY/$REPOSITORY:$IMAGE_TAG
 #------------------------------------------------------------------------------------------------------------------------------------------------------------         
+  deploy-monitoring:
+    runs-on: ubuntu-latest
+    needs: deploy-app
+    steps:    
       - name: Deploy Monitoring
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
