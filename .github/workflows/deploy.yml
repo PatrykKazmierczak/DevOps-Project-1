@@ -115,7 +115,7 @@ jobs:
           # Example: SSH into EC2 instance and run Docker commands to start Grafana container
           ssh ubuntu@${{ needs.deploy-infra.outputs.SERVER_PUBLIC_IP }} -i ${{ secrets.AWS_SSH_KEY_PRIVATE }} "docker run -d --name grafana-container -p 3001:3000 -v /path/to/grafana/data:/var/lib/grafana -e GF_SECURITY_ADMIN_PASSWORD=admin -e GF_SERVER_DOMAIN=localhost <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4"
 
-
+#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
 
 # selenium-test:
   #   runs-on: ubuntu-latest
