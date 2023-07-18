@@ -1,5 +1,3 @@
-name: CI/CD with Terraform
-
 on:
   push:
     branches:
@@ -22,7 +20,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: setup Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_wrapper: false
@@ -74,7 +72,7 @@ jobs:
           cd nodeapp
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-#------------------------------------------------------------------------------------------------------------------------------------------------------------           
+#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
       - name: Deploy Docker image to EC2
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -96,6 +94,46 @@ jobs:
             sudo docker rm myappcontainer || true
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             sudo docker run -d --name myappcontainer -p 80:8080 $REGISTRY/$REPOSITORY:$IMAGE_TAG
+#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+  deploy-prometheus:
+    needs: deploy-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      - name: Deploy Prometheus
+        run: |
+          aws ecr create-repository --repository-name prometheus
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com
+          docker pull prom/prometheus:latest
+          docker tag prom/prometheus:latest <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/prometheus:latest
+          docker push <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/prometheus:latest
+          # Deploy Prometheus using your desired method (e.g., ECS, Docker Compose, etc.)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+  deploy-grafana:
+    needs: deploy-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      - name: Deploy Grafana
+        run: |
+          aws ecr create-repository --repository-name grafana
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com
+          docker pull grafana/grafana-oss:9.1.4
+          docker tag grafana/grafana-oss:9.1.4 <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4
+          docker push <your-account-id>.dkr.ecr.eu-central-1.amazonaws.com/grafana:9.1.4
+          # Deploy Grafana using your desired method (e.g., ECS, Docker Compose, etc.)
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------------         
 
   deploy-monitoring:
