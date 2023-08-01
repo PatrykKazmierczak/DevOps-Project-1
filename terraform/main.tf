@@ -57,6 +57,28 @@ resource "aws_security_group" "maingroup" {
       self             = false
       to_port          = 80
     }
+    {
+      cidr_blocks      = ["0.0.0.0/0", ]
+      description      = ""
+      from_port        = 9100
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      protocol         = "tcp"
+      security_groups  = []
+      self             = false
+      to_port          = 9100
+    }
+    {
+      cidr_blocks      = ["0.0.0.0/0", ]
+      description      = ""
+      from_port        = 9090
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      protocol         = "tcp"
+      security_groups  = []
+      self             = false
+      to_port          = 9090
+    }
   ]
 
 
