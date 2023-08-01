@@ -16,7 +16,7 @@ const httpRequestDurationMicroseconds = new Prometheus.Histogram({
 });
 
 // Middleware to measure response time and observe the duration
-server.use((req, res, next) => {
+server.use(async (req, res, next) => {
   const start = Date.now();
   res.on('finish', () => {
     const responseTimeInMs = Date.now() - start;
@@ -28,9 +28,15 @@ server.use((req, res, next) => {
 });
 
 // Metrics endpoint
-server.get('/metrics', (req, res) => {
-  res.set('Content-Type', Prometheus.register.contentType);
-  res.end(Prometheus.register.metrics());
+server.get('/metrics', async (req, res) => {
+  try {
+    const metrics = await Prometheus.register.metrics();
+    res.set('Content-Type', Prometheus.register.contentType);
+    res.end(metrics);
+  } catch (err) {
+    console.error('Error while generating metrics:', err);
+    res.status(500).send('Error while generating metrics');
+  }
 });
 
 // Start the server
