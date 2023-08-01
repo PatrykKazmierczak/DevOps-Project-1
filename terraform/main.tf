@@ -80,8 +80,6 @@ resource "aws_security_group" "maingroup" {
       to_port          = 9090
     }
   ]
-
-
 }
 
 resource "aws_key_pair" "deployer" {
