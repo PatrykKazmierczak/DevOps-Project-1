@@ -34,7 +34,7 @@ server.get('/metrics', (req, res) => {
 });
 
 // Start the server
-const port = 8080;
+const port = 7070;
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

@@ -94,7 +94,7 @@ jobs:
             sudo docker stop myappcontainer || true
             sudo docker rm myappcontainer || true
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
-            sudo docker run -d --name myappcontainer -p 80:8080 $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            sudo docker run -d --name myappcontainer -p 7070:8080 $REGISTRY/$REPOSITORY:$IMAGE_TAG
 #------------------------------------------------------------------------------------------------------------------------------------------------------------ 
   deploy-prometheus:
     needs: deploy-app
@@ -153,6 +153,7 @@ jobs:
           sudo systemctl start prometheus
           sudo systemctl enable prometheus 
           sudo ufw allow 9090/tcp
+          sudo npm install prom-client
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------ 
       # - name: Deploy Prometheus image to EC2
