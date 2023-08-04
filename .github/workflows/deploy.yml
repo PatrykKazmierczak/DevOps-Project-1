@@ -154,7 +154,6 @@ jobs:
           sudo systemctl enable prometheus 
           sudo ufw allow 9090/tcp
           sudo npm install prom-client
-
 #------------------------------------------------------------------------------------------------------------------------------------------------------------ 
       # - name: Deploy Prometheus image to EC2
                   
